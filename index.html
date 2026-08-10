@@ -3,265 +3,720 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CRYPTOBOY | Official Meme Coin</title>
+<title>CRYPTOBOY Wallet</title>
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-scroll-behavior:smooth;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-background:#0B1220;
-color:#FFFFFF;
+  background:#07050d;
+  color:white;
+  min-height:100vh;
 }
 
-header{
-text-align:center;
-padding:80px 20px;
-background:linear-gradient(135deg,#000000,#111827,#2563EB);
+.app{
+  max-width:480px;
+  margin:auto;
+  min-height:100vh;
+  padding:18px;
+  padding-bottom:90px;
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:22px;
 }
 
 .logo{
-width:180px;
-height:180px;
-border-radius:50%;
-border:5px solid #60A5FA;
-box-shadow:0 0 35px #2563EB;
-margin-bottom:25px;
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
-h1{
-font-size:60px;
-color:#60A5FA;
-margin-bottom:10px;
+.logo-icon{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  background:linear-gradient(135deg,#6d22ff,#a855f7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-size:20px;
 }
 
-.subtitle{
-font-size:22px;
-color:#E5E7EB;
-margin-bottom:30px;
+.logo h1{
+  font-size:22px;
 }
 
-.btn{
-display:inline-block;
-padding:15px 35px;
-margin:10px;
-background:#2563EB;
-color:white;
-text-decoration:none;
-border-radius:40px;
-font-weight:bold;
-font-size:18px;
-transition:.3s;
+.logo span{
+  color:#a855f7;
 }
 
-.btn:hover{
-background:#60A5FA;
-transform:scale(1.05);
+.bell{
+  width:42px;
+  height:42px;
+  border:1px solid #33264d;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
 }
 
-section{
-max-width:1100px;
-margin:auto;
-padding:50px 20px;
+.balance{
+  background:linear-gradient(135deg,#171022,#0c0914);
+  border:1px solid #35215b;
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 0 35px rgba(126,34,206,.18);
+  margin-bottom:18px;
+}
+
+.balance small{
+  color:#aaa;
+}
+
+.balance h2{
+  font-size:32px;
+  margin:10px 0 4px;
+}
+
+.usd{
+  color:#a855f7;
+}
+
+.wallet-address{
+  margin-top:16px;
+  padding:11px;
+  background:#0b0810;
+  border-radius:12px;
+  color:#aaa;
+  font-size:12px;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+  margin-bottom:22px;
+}
+
+.action{
+  border:1px solid #302040;
+  background:#110d18;
+  border-radius:16px;
+  padding:14px 5px;
+  color:white;
+  text-align:center;
+  cursor:pointer;
+}
+
+.action:hover{
+  border-color:#8b3dff;
+}
+
+.action-icon{
+  font-size:22px;
+  margin-bottom:7px;
+}
+
+.action span{
+  font-size:12px;
+  color:#bbb;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:20px 0 12px;
+}
+
+.section-title h3{
+  font-size:18px;
+}
+
+.section-title button{
+  background:none;
+  border:none;
+  color:#a855f7;
+  cursor:pointer;
 }
 
 .card{
-background:#16213E;
-padding:35px;
-margin:25px 0;
-border-radius:20px;
-box-shadow:0 0 20px rgba(37,99,235,.35);
+  background:#100c16;
+  border:1px solid #2d203c;
+  border-radius:18px;
+  padding:15px;
+  margin-bottom:10px;
 }
 
-.card h2{
-color:#60A5FA;
-font-size:34px;
-margin-bottom:20px;
+.wallet-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
-.card p{
-font-size:19px;
-line-height:1.9;
-color:#FFFFFF;
+.coin-icon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#5b21b6,#a855f7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
 }
 
+.wallet-info{
+  flex:1;
+}
+
+.wallet-info b{
+  display:block;
+  margin-bottom:4px;
+}
+
+.wallet-info small{
+  color:#888;
+}
+
+.amount{
+  text-align:right;
+}
+
+.amount b{
+  display:block;
+}
+
+.amount small{
+  color:#888;
+}
+
+.connect{
+  width:100%;
+  padding:16px;
+  border:0;
+  border-radius:15px;
+  background:linear-gradient(90deg,#6d28d9,#9333ea);
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-bottom:15px;
+}
+
+.status{
+  text-align:center;
+  color:#888;
+  font-size:12px;
+  margin-bottom:15px;
+}
+
+.bottom{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(480px,100%);
+  background:#0b0810;
+  border-top:1px solid #291b37;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:12px 8px;
+}
+
+.nav{
+  text-align:center;
+  color:#777;
+  font-size:11px;
+}
+
+.nav.active{
+  color:#a855f7;
+}
+
+.nav div{
+  font-size:20px;
+  margin-bottom:3px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  align-items:flex-end;
+  justify-content:center;
+  z-index:10;
+}
+
+.modal-box{
+  width:min(480px,100%);
+  background:#120d18;
+  border:1px solid #39234f;
+  border-radius:25px 25px 0 0;
+  padding:22px;
+}
+
+.modal-box h2{
+  margin-bottom:16px;
+}
+
+.input{
+  width:100%;
+  background:#08060b;
+  color:white;
+  border:1px solid #33223f;
+  padding:14px;
+  border-radius:12px;
+  margin-bottom:12px;
+  outline:none;
+}
+
+.close{
+  background:#24182c;
+  color:white;
+  border:0;
+  padding:13px;
+  border-radius:12px;
+  width:100%;
+  margin-top:8px;
+}
+
+.notice{
+  color:#999;
+  font-size:12px;
+  line-height:1.5;
+  margin-top:10px;
+}
 </style>
-
 </head>
 
 <body>
 
-<header>
+<div class="app">
 
-<img src="logo.png" class="logo" alt="CRYPTOBOY Logo">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">C</div>
+      <h1>CRYPTO<span>BOY</span></h1>
+    </div>
+    <div class="bell">🔔</div>
+  </div>
 
-<h1>🚀 CRYPTOBOY 🚀</h1>
+  <button class="connect" onclick="connectWallet()">
+    🔗 Connect Wallet
+  </button>
 
-<p class="subtitle">
-The People's Meme Coin on Solana
-</p>
+  <div class="status" id="status">
+    Wallet not connected
+  </div>
 
-<a class="btn" href="#">BUY CBOY</a>
+  <div class="balance">
+    <small>Total Balance</small>
+    <h2 id="balance">0.0000 BNB</h2>
+    <div class="usd" id="usd">≈ $0.00</div>
 
-<a class="btn" href="https://t.me/+XZ9Ej__x0tY5Yjlk">
-JOIN TELEGRAM
-</a>
+    <div class="wallet-address" id="address">
+      Connect your wallet to continue
+    </div>
+  </div>
 
-<a class="btn" href="https://x.com/cryptoboy912920">
-FOLLOW X
-</a>
+  <div class="actions">
 
-</header>
+    <div class="action" onclick="openModal('send')">
+      <div class="action-icon">📤</div>
+      <span>Send</span>
+    </div>
 
-<section>
+    <div class="action" onclick="openModal('receive')">
+      <div class="action-icon">📥</div>
+      <span>Receive</span>
+    </div>
 
-<div class="card">
+    <div class="action" onclick="alert('Swap will be added in the next version.')">
+      <div class="action-icon">🔄</div>
+      <span>Swap</span>
+    </div>
 
-<h2>ABOUT CRYPTOBOY</h2>
+    <div class="action" onclick="alert('Transaction history will appear here.')">
+      <div class="action-icon">📜</div>
+      <span>History</span>
+    </div>
 
-<p>
-CRYPTOBOY is a community-driven meme coin built on the Solana blockchain. Our goal is to build a fun, transparent, and rewarding ecosystem powered by a strong global community.
-</p>
+  </div>
 
-  </div><div class="card">
+  <div class="section-title">
+    <h3>Wallets</h3>
+    <button onclick="connectWallet()">+ Add Wallet</button>
+  </div>
 
-<h2>TOKENOMICS</h2>
+  <div class="card">
+    <div class="wallet-row">
+      <div class="coin-icon">C</div>
 
-<p><b>Token Name:</b> CRYPTOBOY</p>
+      <div class="wallet-info">
+        <b>Main Wallet</b>
+        <small id="shortAddress">Not connected</small>
+      </div>
 
-<p><b>Symbol:</b> CBOY</p>
+      <div class="amount">
+        <b id="walletAmount">0 BNB</b>
+        <small>BNB Chain</small>
+      </div>
+    </div>
+  </div>
 
-<p><b>Blockchain:</b> Solana</p>
+  <div class="card">
+    <div class="wallet-row">
+      <div class="coin-icon">+</div>
 
-<p><b>Total Supply:</b> 1,000,000,000 CBOY</p>
+      <div class="wallet-info">
+        <b>Add Wallet</b>
+        <small>Connect another wallet</small>
+      </div>
+    </div>
+  </div>
 
-<p><b>Buy Tax:</b> 0%</p>
+  <div class="section-title">
+    <h3>Assets</h3>
+  </div>
 
-<p><b>Sell Tax:</b> 0%</p>
+  <div class="card">
+    <div class="wallet-row">
+      <div class="coin-icon">B</div>
 
-<p><b>Liquidity:</b> Locked After Launch</p>
+      <div class="wallet-info">
+        <b>BNB</b>
+        <small>BNB Smart Chain</small>
+      </div>
 
-<p><b>Ownership:</b> Community Driven</p>
-
-</div>
-
-<div class="card">
-
-<h2>COMMUNITY REWARDS</h2>
-
-<p>
-
-CRYPTOBOY is built for the people.
-
-A portion of the ecosystem will be used for community rewards, airdrops, giveaways, marketing campaigns and holder incentives.
-
-Long-term supporters will always have opportunities to benefit from the growth of the project.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h2>ROADMAP</h2>
-
-<p>✅ Phase 1 - Website Launch</p>
-
-<p>✅ Phase 2 - Community Building</p>
-
-<p>🚀 Phase 3 - Official Token Launch</p>
-
-<p>📈 Phase 4 - DEX Listing</p>
-
-<p>🦎 Phase 5 - CoinGecko Listing</p>
-
-<p>📊 Phase 6 - CoinMarketCap Listing</p>
-
-<p>🤝 Phase 7 - Strategic Partnerships</p>
-
-<p>🌍 Phase 8 - Global Expansion</p>
-
-</div>
-
-<div class="card">
-
-<h2>WHY CHOOSE CRYPTOBOY?</h2>
-
-<p>✔ Fast & Low-Cost Solana Network</p>
-
-<p>✔ Strong Community Focus</p>
-
-<p>✔ Transparent Development</p>
-
-<p>✔ Long-Term Vision</p>
-
-<p>✔ Global Growth Strategy</p>
-
-  </div><div class="card">
-
-<h2>CONTRACT ADDRESS</h2>
-
-<p>
-Official contract address will be published here after the token launch.
-Always verify the contract address from our official Telegram and X accounts.
-</p>
-
-<a class="btn" href="#">
-COPY CONTRACT
-</a>
+      <div class="amount">
+        <b id="assetBalance">0 BNB</b>
+        <small>Native</small>
+      </div>
+    </div>
+  </div>
 
 </div>
 
-<div class="card">
+<div class="bottom">
+  <div class="nav active">
+    <div>⌂</div>
+    Home
+  </div>
 
-<h2>WHITEPAPER</h2>
+  <div class="nav">
+    <div>📊</div>
+    Portfolio
+  </div>
 
-<p>
-The official CRYPTOBOY Whitepaper will be released before launch, explaining our vision, tokenomics, roadmap and ecosystem.
-</p>
+  <div class="nav">
+    <div>▣</div>
+    Scan
+  </div>
 
-<a class="btn" href="CRYPTOBOY_Whitepaper_v1.0.pdf" target="_blank">
-DOWNLOAD WHITEPAPER
-</a>
-
+  <div class="nav">
+    <div>⚙</div>
+    Settings
+  </div>
 </div>
 
-<div class="card">
 
-<h2>FOLLOW OUR COMMUNITY</h2>
+<!-- SEND MODAL -->
+<div class="modal" id="sendModal">
+  <div class="modal-box">
 
-<p>Stay connected and never miss an update.</p>
+    <h2>📤 Send BNB</h2>
 
-<a class="btn" href="https://t.me/+XZ9Ej__x0tY5Yjlk">
-TELEGRAM
-</a>
+    <input
+      class="input"
+      id="recipient"
+      placeholder="Recipient wallet address"
+    >
 
-<a class="btn" href="https://x.com/cryptoboy912920">
-X (TWITTER)
-</a>
+    <input
+      class="input"
+      id="sendAmount"
+      type="number"
+      step="0.000001"
+      placeholder="Amount in BNB"
+    >
 
+    <button class="connect" onclick="sendBNB()">
+      Confirm & Send
+    </button>
+
+    <button class="close" onclick="closeModal('send')">
+      Cancel
+    </button>
+
+    <div class="notice">
+      Your wallet will ask you to approve the transaction.
+      CRYPTOBOY never receives or stores your private key.
+    </div>
+
+  </div>
 </div>
 
-<div class="card">
 
-<h2>FAQ</h2>
+<!-- RECEIVE MODAL -->
+<div class="modal" id="receiveModal">
+  <div class="modal-box">
 
-<p><b>What is CRYPTOBOY?</b></p>
-<p>CRYPTOBOY is a community-driven meme coin built on the Solana blockchain.</p>
+    <h2>📥 Receive BNB</h2>
 
-<br>
+    <div class="card">
+      <p id="receiveAddress">
+        Connect wallet first.
+      </p>
+    </div>
 
-<p><b>When will CRYPTOBOY launch?</b></p>
-<p>The official launch is planned for 2027.</p>
+    <button class="connect" onclick="copyAddress()">
+      Copy Address
+    </button>
 
-<br>
+    <button class="close" onclick="closeModal('receive')">
+      Close
+    </button>
 
-<p><b>How can
+  </div>
+</div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"></script>
+
+<script>
+
+let provider;
+let signer;
+let userAddress;
+
+async function connectWallet(){
+
+  if(!window.ethereum){
+
+    alert(
+      "Please open CRYPTOBOY Wallet using a browser with MetaMask or another compatible Web3 wallet."
+    );
+
+    return;
+  }
+
+  try{
+
+    provider = new ethers.BrowserProvider(window.ethereum);
+
+    await provider.send("eth_requestAccounts", []);
+
+    signer = await provider.getSigner();
+
+    userAddress = await signer.getAddress();
+
+    const network = await provider.getNetwork();
+
+    document.getElementById("address").innerText =
+      userAddress;
+
+    document.getElementById("shortAddress").innerText =
+      userAddress.substring(0,6) +
+      "..." +
+      userAddress.substring(userAddress.length - 6);
+
+    document.getElementById("status").innerText =
+      "Wallet connected";
+
+    await loadBalance();
+
+  }catch(error){
+
+    console.log(error);
+
+    document.getElementById("status").innerText =
+      "Connection cancelled";
+
+  }
+
+}
+
+
+async function loadBalance(){
+
+  if(!provider || !userAddress) return;
+
+  try{
+
+    const balance =
+      await provider.getBalance(userAddress);
+
+    const formatted =
+      Number(ethers.formatEther(balance));
+
+    document.getElementById("balance").innerText =
+      formatted.toFixed(4) + " BNB";
+
+    document.getElementById("walletAmount").innerText =
+      formatted.toFixed(4) + " BNB";
+
+    document.getElementById("assetBalance").innerText =
+      formatted.toFixed(4) + " BNB";
+
+    document.getElementById("usd").innerText =
+      "Live BNB price will be added later";
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+
+function openModal(type){
+
+  if(type === "send"){
+
+    document.getElementById("sendModal").style.display =
+      "flex";
+
+  }
+
+  if(type === "receive"){
+
+    document.getElementById("receiveModal").style.display =
+      "flex";
+
+    document.getElementById("receiveAddress").innerText =
+      userAddress || "Connect wallet first.";
+
+  }
+
+}
+
+
+function closeModal(type){
+
+  if(type === "send"){
+
+    document.getElementById("sendModal").style.display =
+      "none";
+
+  }
+
+  if(type === "receive"){
+
+    document.getElementById("receiveModal").style.display =
+      "none";
+
+  }
+
+}
+
+
+async function copyAddress(){
+
+  if(!userAddress){
+
+    alert("Connect your wallet first.");
+
+    return;
+  }
+
+  await navigator.clipboard.writeText(userAddress);
+
+  alert("Wallet address copied.");
+
+}
+
+
+async function sendBNB(){
+
+  if(!signer){
+
+    alert("Connect your wallet first.");
+
+    return;
+  }
+
+  const recipient =
+    document.getElementById("recipient").value.trim();
+
+  const amount =
+    document.getElementById("sendAmount").value.trim();
+
+  if(!ethers.isAddress(recipient)){
+
+    alert("Please enter a valid wallet address.");
+
+    return;
+  }
+
+  if(!amount || Number(amount) <= 0){
+
+    alert("Enter a valid amount.");
+
+    return;
+  }
+
+  try{
+
+    const tx = await signer.sendTransaction({
+
+      to: recipient,
+
+      value: ethers.parseEther(amount)
+
+    });
+
+    alert(
+      "Transaction submitted!\n\nHash:\n" +
+      tx.hash
+    );
+
+    closeModal("send");
+
+    await loadBalance();
+
+  }catch(error){
+
+    console.log(error);
+
+    alert(
+      "Transaction was cancelled or failed."
+    );
+
+  }
+
+}
+
+
+if(window.ethereum){
+
+  window.ethereum.on(
+    "accountsChanged",
+    function(){
+
+      connectWallet();
+
+    }
+  );
+
+}
+
+</script>
+
+</body>
+  </html>
