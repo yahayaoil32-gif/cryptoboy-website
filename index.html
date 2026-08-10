@@ -1,722 +1,92 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CRYPTOBOY Wallet</title>
-
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-  background:#07050d;
-  color:white;
-  min-height:100vh;
-}
-
-.app{
-  max-width:480px;
-  margin:auto;
-  min-height:100vh;
-  padding:18px;
-  padding-bottom:90px;
-}
-
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:22px;
-}
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.logo-icon{
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  background:linear-gradient(135deg,#6d22ff,#a855f7);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  font-size:20px;
-}
-
-.logo h1{
-  font-size:22px;
-}
-
-.logo span{
-  color:#a855f7;
-}
-
-.bell{
-  width:42px;
-  height:42px;
-  border:1px solid #33264d;
-  border-radius:13px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:20px;
-}
-
-.balance{
-  background:linear-gradient(135deg,#171022,#0c0914);
-  border:1px solid #35215b;
-  border-radius:22px;
-  padding:22px;
-  box-shadow:0 0 35px rgba(126,34,206,.18);
-  margin-bottom:18px;
-}
-
-.balance small{
-  color:#aaa;
-}
-
-.balance h2{
-  font-size:32px;
-  margin:10px 0 4px;
-}
-
-.usd{
-  color:#a855f7;
-}
-
-.wallet-address{
-  margin-top:16px;
-  padding:11px;
-  background:#0b0810;
-  border-radius:12px;
-  color:#aaa;
-  font-size:12px;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-}
-
-.actions{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:9px;
-  margin-bottom:22px;
-}
-
-.action{
-  border:1px solid #302040;
-  background:#110d18;
-  border-radius:16px;
-  padding:14px 5px;
-  color:white;
-  text-align:center;
-  cursor:pointer;
-}
-
-.action:hover{
-  border-color:#8b3dff;
-}
-
-.action-icon{
-  font-size:22px;
-  margin-bottom:7px;
-}
-
-.action span{
-  font-size:12px;
-  color:#bbb;
-}
-
-.section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:20px 0 12px;
-}
-
-.section-title h3{
-  font-size:18px;
-}
-
-.section-title button{
-  background:none;
-  border:none;
-  color:#a855f7;
-  cursor:pointer;
-}
-
-.card{
-  background:#100c16;
-  border:1px solid #2d203c;
-  border-radius:18px;
-  padding:15px;
-  margin-bottom:10px;
-}
-
-.wallet-row{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.coin-icon{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#5b21b6,#a855f7);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-}
-
-.wallet-info{
-  flex:1;
-}
-
-.wallet-info b{
-  display:block;
-  margin-bottom:4px;
-}
-
-.wallet-info small{
-  color:#888;
-}
-
-.amount{
-  text-align:right;
-}
-
-.amount b{
-  display:block;
-}
-
-.amount small{
-  color:#888;
-}
-
-.connect{
-  width:100%;
-  padding:16px;
-  border:0;
-  border-radius:15px;
-  background:linear-gradient(90deg,#6d28d9,#9333ea);
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-bottom:15px;
-}
-
-.status{
-  text-align:center;
-  color:#888;
-  font-size:12px;
-  margin-bottom:15px;
-}
-
-.bottom{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(480px,100%);
-  background:#0b0810;
-  border-top:1px solid #291b37;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  padding:12px 8px;
-}
-
-.nav{
-  text-align:center;
-  color:#777;
-  font-size:11px;
-}
-
-.nav.active{
-  color:#a855f7;
-}
-
-.nav div{
-  font-size:20px;
-  margin-bottom:3px;
-}
-
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  align-items:flex-end;
-  justify-content:center;
-  z-index:10;
-}
-
-.modal-box{
-  width:min(480px,100%);
-  background:#120d18;
-  border:1px solid #39234f;
-  border-radius:25px 25px 0 0;
-  padding:22px;
-}
-
-.modal-box h2{
-  margin-bottom:16px;
-}
-
-.input{
-  width:100%;
-  background:#08060b;
-  color:white;
-  border:1px solid #33223f;
-  padding:14px;
-  border-radius:12px;
-  margin-bottom:12px;
-  outline:none;
-}
-
-.close{
-  background:#24182c;
-  color:white;
-  border:0;
-  padding:13px;
-  border-radius:12px;
-  width:100%;
-  margin-top:8px;
-}
-
-.notice{
-  color:#999;
-  font-size:12px;
-  line-height:1.5;
-  margin-top:10px;
-}
+*{box-sizing:border-box}body{margin:0;background:#07050d;color:#fff;font-family:Arial,sans-serif}
+.app{max-width:480px;margin:auto;padding:18px 18px 90px}.top{display:flex;justify-content:space-between;align-items:center}
+.logo{background:linear-gradient(135deg,#7025ff,#a33cff);padding:14px;border-radius:16px;font-size:24px;font-weight:bold}
+button{cursor:pointer;color:#fff;border:0}.connect,.primary{width:100%;padding:17px;border-radius:17px;background:linear-gradient(90deg,#6920e8,#a32fff);font-size:18px;font-weight:bold}
+.status{text-align:center;color:#999;margin:15px}.card,.box{background:#0e0a17;border:1px solid #2b1c3e;border-radius:22px;padding:22px;margin:15px 0}
+.label,.small{color:#999}.balance{font-size:38px;font-weight:bold;margin:8px 0}.usd{color:#a653ff}
+.notice{background:#090711;border-radius:12px;padding:13px;color:#aaa;margin-top:18px}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.action{background:#0e0a17;border:1px solid #2b1c3e;border-radius:17px;padding:15px 4px}.action span{display:block;font-size:23px;margin-bottom:7px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.wallet{background:#0e0a17;border:1px solid #2b1c3e;border-radius:18px;padding:16px;margin:10px 0}
+.coin{width:45px;height:45px;border-radius:50%;background:#7729e8;display:grid;place-items:center;font-weight:bold}
+.nav{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:auto;background:#0b0810;border-top:1px solid #24162f;display:grid;grid-template-columns:repeat(4,1fr);padding:9px}.nav button{background:none;color:#777}.nav .on{color:#a33cff}
+.panel{display:none}.active{display:block}
+.modal{display:none;position:fixed;inset:0;background:#000b;align-items:end;z-index:5}.modal.show{display:flex}
+.sheet{width:min(480px,100%);margin:auto;background:#100b18;border-radius:24px 24px 0 0;padding:22px}
+.input{width:100%;padding:14px;margin:7px 0;background:#08060d;color:#fff;border:1px solid #342247;border-radius:12px}
+.close{float:right;background:none;font-size:25px;color:#aaa}
 </style>
 </head>
-
 <body>
-
 <div class="app">
+<div class="top"><div class="logo">C <span style="color:white">CRYPTO</span><span style="color:#b45aff">BOY</span></div><button onclick="alert('Notifications are not configured yet')">🔔</button></div>
 
-  <div class="header">
-    <div class="logo">
-      <div class="logo-icon">C</div>
-      <h1>CRYPTO<span>BOY</span></h1>
-    </div>
-    <div class="bell">🔔</div>
-  </div>
+<section id="home" class="panel active">
+<button class="connect" onclick="connectWallet()">🔗 Connect Wallet</button>
+<div id="status" class="status">Wallet not connected</div>
+<div class="card"><div class="label">Total Balance</div><div id="balance" class="balance">12.3456 BNB</div><div class="usd">≈ $0.00 <span style="font-size:12px;color:#777">(Demo)</span></div><div id="notice" class="notice">Demo balance — connect wallet to show your real BNB balance</div></div>
+<div class="actions">
+<button class="action" onclick="openBox('send')"><span>📤</span>Send</button>
+<button class="action" onclick="openBox('receive')"><span>📥</span>Receive</button>
+<button class="action" onclick="openBox('swap')"><span>🔄</span>Swap</button>
+<button class="action" onclick="openBox('history')"><span>📜</span>History</button>
+</div>
+<h2>Wallets</h2>
+<div class="wallet" onclick="connectWallet()"><div class="row"><div class="row"><div class="coin">C</div><div><b>Main Wallet</b><div id="addr" class="small">Not connected</div></div></div><b id="wb">12.3456 BNB</b></div></div>
+<h2>Assets</h2><div class="wallet"><div class="row"><div><b>🟣 BNB</b><div class="small">BNB Smart Chain</div></div><b id="ab">12.3456 BNB</b></div></div>
+</section>
 
-  <button class="connect" onclick="connectWallet()">
-    🔗 Connect Wallet
-  </button>
+<section id="portfolio" class="panel"><h2>Portfolio</h2><div class="card">Address<div id="paddr" class="small">Not connected</div></div><div class="card">BNB Balance<div id="pbal" class="balance">0 BNB</div></div></section>
+<section id="scan" class="panel"><h2>Scan</h2><div class="card">QR scanner can be added here later.</div></section>
+<section id="settings" class="panel"><h2>Settings</h2><div class="wallet" onclick="connectWallet()">🔗 Connect / Reconnect Wallet</div><div class="wallet" onclick="disconnectWallet()">🚪 Disconnect</div></section>
 
-  <div class="status" id="status">
-    Wallet not connected
-  </div>
-
-  <div class="balance">
-    <small>Total Balance</small>
-    <h2 id="balance">0.0000 BNB</h2>
-    <div class="usd" id="usd">≈ $0.00</div>
-
-    <div class="wallet-address" id="address">
-      Connect your wallet to continue
-    </div>
-  </div>
-
-  <div class="actions">
-
-    <div class="action" onclick="openModal('send')">
-      <div class="action-icon">📤</div>
-      <span>Send</span>
-    </div>
-
-    <div class="action" onclick="openModal('receive')">
-      <div class="action-icon">📥</div>
-      <span>Receive</span>
-    </div>
-
-    <div class="action" onclick="alert('Swap will be added in the next version.')">
-      <div class="action-icon">🔄</div>
-      <span>Swap</span>
-    </div>
-
-    <div class="action" onclick="alert('Transaction history will appear here.')">
-      <div class="action-icon">📜</div>
-      <span>History</span>
-    </div>
-
-  </div>
-
-  <div class="section-title">
-    <h3>Wallets</h3>
-    <button onclick="connectWallet()">+ Add Wallet</button>
-  </div>
-
-  <div class="card">
-    <div class="wallet-row">
-      <div class="coin-icon">C</div>
-
-      <div class="wallet-info">
-        <b>Main Wallet</b>
-        <small id="shortAddress">Not connected</small>
-      </div>
-
-      <div class="amount">
-        <b id="walletAmount">0 BNB</b>
-        <small>BNB Chain</small>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="wallet-row">
-      <div class="coin-icon">+</div>
-
-      <div class="wallet-info">
-        <b>Add Wallet</b>
-        <small>Connect another wallet</small>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-title">
-    <h3>Assets</h3>
-  </div>
-
-  <div class="card">
-    <div class="wallet-row">
-      <div class="coin-icon">B</div>
-
-      <div class="wallet-info">
-        <b>BNB</b>
-        <small>BNB Smart Chain</small>
-      </div>
-
-      <div class="amount">
-        <b id="assetBalance">0 BNB</b>
-        <small>Native</small>
-      </div>
-    </div>
-  </div>
-
+<div class="nav"><button class="on" onclick="tab('home',this)">⌂<br>Home</button><button onclick="tab('portfolio',this)">📊<br>Portfolio</button><button onclick="tab('scan',this)">▣<br>Scan</button><button onclick="tab('settings',this)">⚙<br>Settings</button></div>
 </div>
 
-<div class="bottom">
-  <div class="nav active">
-    <div>⌂</div>
-    Home
-  </div>
-
-  <div class="nav">
-    <div>📊</div>
-    Portfolio
-  </div>
-
-  <div class="nav">
-    <div>▣</div>
-    Scan
-  </div>
-
-  <div class="nav">
-    <div>⚙</div>
-    Settings
-  </div>
-</div>
-
-
-<!-- SEND MODAL -->
-<div class="modal" id="sendModal">
-  <div class="modal-box">
-
-    <h2>📤 Send BNB</h2>
-
-    <input
-      class="input"
-      id="recipient"
-      placeholder="Recipient wallet address"
-    >
-
-    <input
-      class="input"
-      id="sendAmount"
-      type="number"
-      step="0.000001"
-      placeholder="Amount in BNB"
-    >
-
-    <button class="connect" onclick="sendBNB()">
-      Confirm & Send
-    </button>
-
-    <button class="close" onclick="closeModal('send')">
-      Cancel
-    </button>
-
-    <div class="notice">
-      Your wallet will ask you to approve the transaction.
-      CRYPTOBOY never receives or stores your private key.
-    </div>
-
-  </div>
-</div>
-
-
-<!-- RECEIVE MODAL -->
-<div class="modal" id="receiveModal">
-  <div class="modal-box">
-
-    <h2>📥 Receive BNB</h2>
-
-    <div class="card">
-      <p id="receiveAddress">
-        Connect wallet first.
-      </p>
-    </div>
-
-    <button class="connect" onclick="copyAddress()">
-      Copy Address
-    </button>
-
-    <button class="close" onclick="closeModal('receive')">
-      Close
-    </button>
-
-  </div>
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"></script>
+<div id="modal" class="modal" onclick="if(event.target===this)closeBox()"><div class="sheet"><button class="close" onclick="closeBox()">×</button>
+<div id="send"><h3>Send BNB</h3><input id="to" class="input" placeholder="Recipient address"><input id="amount" class="input" placeholder="Amount in BNB" type="number" step="0.0001"><button class="primary" onclick="sendBNB()">Send</button></div>
+<div id="receive" style="display:none"><h3>Receive</h3><p>Your address:</p><div id="receiveAddr" style="word-break:break-all;background:#08060d;padding:14px;border-radius:12px"></div></div>
+<div id="swap" style="display:none"><h3>Swap</h3><p class="small">Swap screen yana aiki a matsayin interface. Real swap za mu haɗa da trusted DEX/router daga baya.</p><button class="primary" onclick="alert('Swap router bai haɗu ba tukuna')">Continue</button></div>
+<div id="history" style="display:none"><h3>History</h3><p id="hist" class="small">Connect wallet domin a ɗora transaction history.</p></div>
+</div></div>
 
 <script>
-
-let provider;
-let signer;
-let userAddress;
-
+let provider=null,signer=null,address=null;
+function tab(id,b){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on')}
+function openBox(id){document.getElementById('modal').classList.add('show');['send','receive','swap','history'].forEach(x=>document.getElementById(x).style.display=x===id?'block':'none');if(id==='receive')document.getElementById('receiveAddr').textContent=address||'Connect wallet first';if(id==='history')document.getElementById('hist').textContent=address?'Transaction history indexer can be added here.':'Connect wallet first.'}
+function closeBox(){document.getElementById('modal').classList.remove('show')}
+function short(a){return a.slice(0,6)+'...'+a.slice(-4)}
 async function connectWallet(){
-
-  if(!window.ethereum){
-
-    alert(
-      "Please open CRYPTOBOY Wallet using a browser with MetaMask or another compatible Web3 wallet."
-    );
-
-    return;
-  }
-
-  try{
-
-    provider = new ethers.BrowserProvider(window.ethereum);
-
-    await provider.send("eth_requestAccounts", []);
-
-    signer = await provider.getSigner();
-
-    userAddress = await signer.getAddress();
-
-    const network = await provider.getNetwork();
-
-    document.getElementById("address").innerText =
-      userAddress;
-
-    document.getElementById("shortAddress").innerText =
-      userAddress.substring(0,6) +
-      "..." +
-      userAddress.substring(userAddress.length - 6);
-
-    document.getElementById("status").innerText =
-      "Wallet connected";
-
-    await loadBalance();
-
-  }catch(error){
-
-    console.log(error);
-
-    document.getElementById("status").innerText =
-      "Connection cancelled";
-
-  }
-
+ if(!window.ethereum){alert('Wallet provider bai samu ba. Ka buɗe website daga MetaMask/Trust Wallet browser, ko mu haɗa WalletConnect daga baya.');return}
+ try{
+  provider=new ethers.BrowserProvider(window.ethereum);
+  await provider.send('eth_requestAccounts',[]);
+  signer=await provider.getSigner();address=await signer.getAddress();
+  const net=await provider.getNetwork();
+  if(net.chainId!==56n){try{await window.ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:'0x38'}]})}catch(e){alert('Canza network zuwa BNB Smart Chain (Chain ID 56).')}}
+  await refresh();
+ }catch(e){alert('Connect bai yi ba: '+(e.shortMessage||e.message))}
 }
-
-
-async function loadBalance(){
-
-  if(!provider || !userAddress) return;
-
-  try{
-
-    const balance =
-      await provider.getBalance(userAddress);
-
-    const formatted =
-      Number(ethers.formatEther(balance));
-
-    document.getElementById("balance").innerText =
-      formatted.toFixed(4) + " BNB";
-
-    document.getElementById("walletAmount").innerText =
-      formatted.toFixed(4) + " BNB";
-
-    document.getElementById("assetBalance").innerText =
-      formatted.toFixed(4) + " BNB";
-
-    document.getElementById("usd").innerText =
-      "Live BNB price will be added later";
-
-  }catch(error){
-
-    console.log(error);
-
-  }
-
+async function refresh(){
+ const b=await provider.getBalance(address),v=Number(ethers.formatEther(b)).toFixed(4);
+ document.getElementById('balance').textContent=v+' BNB';document.getElementById('wb').textContent=v+' BNB';document.getElementById('ab').textContent=v+' BNB';document.getElementById('pbal').textContent=v+' BNB';
+ document.getElementById('addr').textContent=short(address);document.getElementById('paddr').textContent=address;document.getElementById('receiveAddr').textContent=address;
+ document.getElementById('status').textContent='Connected: '+short(address);document.getElementById('notice').textContent='Wallet connected successfully';
 }
-
-
-function openModal(type){
-
-  if(type === "send"){
-
-    document.getElementById("sendModal").style.display =
-      "flex";
-
-  }
-
-  if(type === "receive"){
-
-    document.getElementById("receiveModal").style.display =
-      "flex";
-
-    document.getElementById("receiveAddress").innerText =
-      userAddress || "Connect wallet first.";
-
-  }
-
-}
-
-
-function closeModal(type){
-
-  if(type === "send"){
-
-    document.getElementById("sendModal").style.display =
-      "none";
-
-  }
-
-  if(type === "receive"){
-
-    document.getElementById("receiveModal").style.display =
-      "none";
-
-  }
-
-}
-
-
-async function copyAddress(){
-
-  if(!userAddress){
-
-    alert("Connect your wallet first.");
-
-    return;
-  }
-
-  await navigator.clipboard.writeText(userAddress);
-
-  alert("Wallet address copied.");
-
-}
-
-
 async function sendBNB(){
-
-  if(!signer){
-
-    alert("Connect your wallet first.");
-
-    return;
-  }
-
-  const recipient =
-    document.getElementById("recipient").value.trim();
-
-  const amount =
-    document.getElementById("sendAmount").value.trim();
-
-  if(!ethers.isAddress(recipient)){
-
-    alert("Please enter a valid wallet address.");
-
-    return;
-  }
-
-  if(!amount || Number(amount) <= 0){
-
-    alert("Enter a valid amount.");
-
-    return;
-  }
-
-  try{
-
-    const tx = await signer.sendTransaction({
-
-      to: recipient,
-
-      value: ethers.parseEther(amount)
-
-    });
-
-    alert(
-      "Transaction submitted!\n\nHash:\n" +
-      tx.hash
-    );
-
-    closeModal("send");
-
-    await loadBalance();
-
-  }catch(error){
-
-    console.log(error);
-
-    alert(
-      "Transaction was cancelled or failed."
-    );
-
-  }
-
+ if(!signer){alert('Da farko Connect Wallet');return}
+ const to=document.getElementById('to').value.trim(),amount=document.getElementById('amount').value;
+ if(!ethers.isAddress(to)){alert('Address ba daidai ba ne');return}
+ if(!amount||Number(amount)<=0){alert('Shigar da amount');return}
+ try{const tx=await signer.sendTransaction({to:to,value:ethers.parseEther(amount)});alert('An aika transaction:\n'+tx.hash);closeBox();await refresh()}catch(e){alert('Transaction bai yi ba: '+(e.shortMessage||e.message))}
 }
-
-
-if(window.ethereum){
-
-  window.ethereum.on(
-    "accountsChanged",
-    function(){
-
-      connectWallet();
-
-    }
-  );
-
-}
-
+function disconnectWallet(){location.reload()}
 </script>
-
-</body>
-  </html>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"></script>
+</body></html>
