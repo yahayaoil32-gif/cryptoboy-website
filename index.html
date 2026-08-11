@@ -3,90 +3,171 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CRYPTOBOY Wallet</title>
+<title>CoinRush — Wallet & Meme Trading</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#07050d;color:#fff;font-family:Arial,sans-serif}
-.app{max-width:480px;margin:auto;padding:18px 18px 90px}.top{display:flex;justify-content:space-between;align-items:center}
-.logo{background:linear-gradient(135deg,#7025ff,#a33cff);padding:14px;border-radius:16px;font-size:24px;font-weight:bold}
-button{cursor:pointer;color:#fff;border:0}.connect,.primary{width:100%;padding:17px;border-radius:17px;background:linear-gradient(90deg,#6920e8,#a32fff);font-size:18px;font-weight:bold}
-.status{text-align:center;color:#999;margin:15px}.card,.box{background:#0e0a17;border:1px solid #2b1c3e;border-radius:22px;padding:22px;margin:15px 0}
-.label,.small{color:#999}.balance{font-size:38px;font-weight:bold;margin:8px 0}.usd{color:#a653ff}
-.notice{background:#090711;border-radius:12px;padding:13px;color:#aaa;margin-top:18px}
-.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.action{background:#0e0a17;border:1px solid #2b1c3e;border-radius:17px;padding:15px 4px}.action span{display:block;font-size:23px;margin-bottom:7px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.wallet{background:#0e0a17;border:1px solid #2b1c3e;border-radius:18px;padding:16px;margin:10px 0}
-.coin{width:45px;height:45px;border-radius:50%;background:#7729e8;display:grid;place-items:center;font-weight:bold}
-.nav{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:auto;background:#0b0810;border-top:1px solid #24162f;display:grid;grid-template-columns:repeat(4,1fr);padding:9px}.nav button{background:none;color:#777}.nav .on{color:#a33cff}
-.panel{display:none}.active{display:block}
-.modal{display:none;position:fixed;inset:0;background:#000b;align-items:end;z-index:5}.modal.show{display:flex}
-.sheet{width:min(480px,100%);margin:auto;background:#100b18;border-radius:24px 24px 0 0;padding:22px}
+.app{max-width:480px;margin:auto;padding:16px 16px 90px}.top{display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:26px;font-weight:800}.logo span{color:#a34cff}
+button{font:inherit;cursor:pointer}.icon{background:#120d1c;border:1px solid #30203f;color:#fff;border-radius:13px;padding:11px}
+.connect,.primary{width:100%;border:0;border-radius:16px;padding:16px;background:linear-gradient(90deg,#6920e8,#a32fff);color:#fff;font-weight:700}
+.status{text-align:center;color:#999;margin:12px}.card,.item{background:#0e0a17;border:1px solid #2b1c3e;border-radius:20px;padding:18px;margin:12px 0}
+.label,.muted{color:#999}.balance{font-size:35px;font-weight:800;margin:8px 0}.notice{background:#090711;padding:12px;border-radius:12px;color:#aaa;margin-top:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:15px 0}.action{background:#0e0a17;border:1px solid #2b1c3e;border-radius:16px;color:#fff;padding:13px 3px}.action span{display:block;font-size:22px;margin-bottom:6px}
+.section{display:none}.section.active{display:block}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.token{display:flex;align-items:center;gap:10px}.coin{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#6d22df,#b04cff);display:grid;place-items:center;font-weight:bold}
+.tabs{display:flex;gap:8px;overflow:auto;margin:14px 0}.tabs button{background:#0e0a17;color:#aaa;border:1px solid #2b1c3e;border-radius:12px;padding:10px 14px;white-space:nowrap}.tabs .on{background:#6f24dc;color:#fff}
 .input{width:100%;padding:14px;margin:7px 0;background:#08060d;color:#fff;border:1px solid #342247;border-radius:12px}
-.close{float:right;background:none;font-size:25px;color:#aaa}
+.nav{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:auto;background:#0b0810;border-top:1px solid #24162f;display:grid;grid-template-columns:repeat(5,1fr);padding:8px}.nav button{background:none;border:0;color:#777;padding:5px;font-size:12px}.nav .on{color:#a34cff}
+.modal{display:none;position:fixed;inset:0;background:#000b;align-items:end;z-index:5}.modal.show{display:flex}.sheet{width:min(480px,100%);margin:auto;background:#100b18;border-radius:24px 24px 0 0;padding:21px}.close{float:right;background:none;border:0;color:#aaa;font-size:25px}
+.badge{font-size:11px;padding:5px 7px;border-radius:8px;background:#211334;color:#c58aff}
 </style>
 </head>
 <body>
 <div class="app">
-<div class="top"><div class="logo">C <span style="color:white">CRYPTO</span><span style="color:#b45aff">BOY</span></div><button onclick="alert('Notifications are not configured yet')">🔔</button></div>
+<header class="top"><div class="logo">Coin<span>Rush</span></div><button class="icon" onclick="alert('Notifications will be connected later.')">🔔</button></header>
 
-<section id="home" class="panel active">
+<section id="home" class="section active">
 <button class="connect" onclick="connectWallet()">🔗 Connect Wallet</button>
 <div id="status" class="status">Wallet not connected</div>
-<div class="card"><div class="label">Total Balance</div><div id="balance" class="balance">12.3456 BNB</div><div class="usd">≈ $0.00 <span style="font-size:12px;color:#777">(Demo)</span></div><div id="notice" class="notice">Demo balance — connect wallet to show your real BNB balance</div></div>
-<div class="actions">
-<button class="action" onclick="openBox('send')"><span>📤</span>Send</button>
-<button class="action" onclick="openBox('receive')"><span>📥</span>Receive</button>
-<button class="action" onclick="openBox('swap')"><span>🔄</span>Swap</button>
-<button class="action" onclick="openBox('history')"><span>📜</span>History</button>
+<div class="card">
+<div class="label">Portfolio</div>
+<div id="balance" class="balance">Connect wallet</div>
+<div id="networkText" class="muted">BNB Chain • Solana ready</div>
+<div class="notice">🔐 Non-custodial: CoinRush never asks for your seed phrase or private key.</div>
 </div>
-<h2>Wallets</h2>
-<div class="wallet" onclick="connectWallet()"><div class="row"><div class="row"><div class="coin">C</div><div><b>Main Wallet</b><div id="addr" class="small">Not connected</div></div></div><b id="wb">12.3456 BNB</b></div></div>
-<h2>Assets</h2><div class="wallet"><div class="row"><div><b>🟣 BNB</b><div class="small">BNB Smart Chain</div></div><b id="ab">12.3456 BNB</b></div></div>
+<div class="grid">
+<button class="action" onclick="openTrade('buy')"><span>🟢</span>Buy</button>
+<button class="action" onclick="openTrade('sell')"><span>🔴</span>Sell</button>
+<button class="action" onclick="openTrade('swap')"><span>🔄</span>Swap</button>
+<button class="action" onclick="openReceive()"><span>📥</span>Receive</button>
+</div>
+<h3>🔥 Trending</h3><div id="trending"></div>
 </section>
 
-<section id="portfolio" class="panel"><h2>Portfolio</h2><div class="card">Address<div id="paddr" class="small">Not connected</div></div><div class="card">BNB Balance<div id="pbal" class="balance">0 BNB</div></div></section>
-<section id="scan" class="panel"><h2>Scan</h2><div class="card">QR scanner can be added here later.</div></section>
-<section id="settings" class="panel"><h2>Settings</h2><div class="wallet" onclick="connectWallet()">🔗 Connect / Reconnect Wallet</div><div class="wallet" onclick="disconnectWallet()">🚪 Disconnect</div></section>
+<section id="discover" class="section">
+<h2>🆕 New Meme Coins</h2>
+<div class="tabs"><button class="on">New</button><button>Trending</button><button>Solana</button><button>BNB</button></div>
+<div class="item"><b>Live token discovery</b><p class="muted">Real new-pair data will appear here after a DEX/indexer API is configured.</p></div>
+<div id="discoverList"></div>
+</section>
 
-<div class="nav"><button class="on" onclick="tab('home',this)">⌂<br>Home</button><button onclick="tab('portfolio',this)">📊<br>Portfolio</button><button onclick="tab('scan',this)">▣<br>Scan</button><button onclick="tab('settings',this)">⚙<br>Settings</button></div>
+<section id="trade" class="section">
+<h2>Trade</h2>
+<div class="card">
+<div class="tabs"><button id="buyBtn" class="on" onclick="setMode('buy')">Buy</button><button id="sellBtn" onclick="setMode('sell')">Sell</button><button id="swapBtn" onclick="setMode('swap')">Swap</button></div>
+<label class="muted">Network</label>
+<select id="network" class="input"><option value="bsc">BNB Smart Chain</option><option value="solana">Solana</option></select>
+<label class="muted">Token contract / mint</label>
+<input id="token" class="input" placeholder="Paste token address">
+<label class="muted">Amount</label>
+<input id="amount" class="input" type="number" step="any" placeholder="0.00">
+<div class="card">
+<div class="row"><span class="muted">CoinRush fee</span><b>0.20%</b></div>
+<div class="row" style="margin-top:9px"><span class="muted">Quote</span><span id="quote">—</span></div>
+</div>
+<button class="primary" onclick="getQuote()">Get Quote</button>
+<button class="primary" style="margin-top:9px;background:#241231" onclick="confirmTrade()">Confirm Trade</button>
+<p class="muted" style="font-size:12px">Mainnet trading stays disabled until an actual DEX router is configured and tested.</p>
+</div>
+</section>
+
+<section id="portfolio" class="section"><h2>📊 Portfolio</h2>
+<div class="card"><div class="label">Wallet</div><div id="walletAddress" style="word-break:break-all">Not connected</div></div>
+<div class="card"><div class="label">BNB Balance</div><div id="bnbBalance" class="balance">—</div></div>
+</section>
+
+<section id="history" class="section"><h2>📜 History</h2>
+<div class="card"><p class="muted">Connect a wallet. Real transaction history will be loaded through a blockchain indexer.</p></div>
+</section>
+
+<section id="rewards" class="section"><h2>🎁 Rewards</h2>
+<div class="card"><div class="label">CoinRush Points</div><div class="balance">0</div><p class="muted">Rewards will be activated after the reward backend/contract is configured.</p></div>
+<div class="item">👥 Referral system: <b>Ready for backend integration</b></div>
+</section>
+
+<section id="settings" class="section"><h2>⚙️ Settings</h2>
+<div class="item" onclick="connectWallet()">🔗 Connect / Reconnect Wallet</div>
+<div class="item" onclick="disconnectWallet()">🚪 Disconnect</div>
+<div class="item">🔐 Non-custodial security</div>
+</section>
+
+<nav class="nav">
+<button class="on" onclick="tab('home',this)">⌂<br>Home</button>
+<button onclick="tab('discover',this)">🔥<br>Discover</button>
+<button onclick="tab('trade',this)">⇄<br>Trade</button>
+<button onclick="tab('portfolio',this)">📊<br>Portfolio</button>
+<button onclick="tab('settings',this)">⚙<br>Settings</button>
+</nav>
 </div>
 
-<div id="modal" class="modal" onclick="if(event.target===this)closeBox()"><div class="sheet"><button class="close" onclick="closeBox()">×</button>
-<div id="send"><h3>Send BNB</h3><input id="to" class="input" placeholder="Recipient address"><input id="amount" class="input" placeholder="Amount in BNB" type="number" step="0.0001"><button class="primary" onclick="sendBNB()">Send</button></div>
-<div id="receive" style="display:none"><h3>Receive</h3><p>Your address:</p><div id="receiveAddr" style="word-break:break-all;background:#08060d;padding:14px;border-radius:12px"></div></div>
-<div id="swap" style="display:none"><h3>Swap</h3><p class="small">Swap screen yana aiki a matsayin interface. Real swap za mu haɗa da trusted DEX/router daga baya.</p><button class="primary" onclick="alert('Swap router bai haɗu ba tukuna')">Continue</button></div>
-<div id="history" style="display:none"><h3>History</h3><p id="hist" class="small">Connect wallet domin a ɗora transaction history.</p></div>
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()">
+<div class="sheet"><button class="close" onclick="closeModal()">×</button>
+<h3>📥 Receive</h3><p class="muted">Your connected wallet address:</p>
+<div id="receiveAddress" style="word-break:break-all;background:#08060d;padding:14px;border-radius:12px">Connect wallet first</div>
 </div></div>
 
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"></script>
 <script>
-let provider=null,signer=null,address=null;
-function tab(id,b){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on')}
-function openBox(id){document.getElementById('modal').classList.add('show');['send','receive','swap','history'].forEach(x=>document.getElementById(x).style.display=x===id?'block':'none');if(id==='receive')document.getElementById('receiveAddr').textContent=address||'Connect wallet first';if(id==='history')document.getElementById('hist').textContent=address?'Transaction history indexer can be added here.':'Connect wallet first.'}
-function closeBox(){document.getElementById('modal').classList.remove('show')}
+let provider=null,signer=null,address=null,tradeMode='buy';
+
+function tab(id,btn){
+ document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('on'));
+ btn.classList.add('on');
+}
 function short(a){return a.slice(0,6)+'...'+a.slice(-4)}
+function openReceive(){document.getElementById('modal').classList.add('show');document.getElementById('receiveAddress').textContent=address||'Connect wallet first'}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function openTrade(m){document.getElementById('trade').classList.add('active');document.getElementById('home').classList.remove('active');setMode(m)}
+function setMode(m){tradeMode=m;document.getElementById('buyBtn').classList.toggle('on',m==='buy');document.getElementById('sellBtn').classList.toggle('on',m==='sell');document.getElementById('swapBtn').classList.toggle('on',m==='swap')}
 async function connectWallet(){
- if(!window.ethereum){alert('Wallet provider bai samu ba. Ka buɗe website daga MetaMask/Trust Wallet browser, ko mu haɗa WalletConnect daga baya.');return}
+ if(!window.ethereum){alert('No compatible EVM wallet found. Open this page inside MetaMask/Trust Wallet or add WalletConnect later.');return}
  try{
   provider=new ethers.BrowserProvider(window.ethereum);
   await provider.send('eth_requestAccounts',[]);
-  signer=await provider.getSigner();address=await signer.getAddress();
+  signer=await provider.getSigner();
+  address=await signer.getAddress();
   const net=await provider.getNetwork();
-  if(net.chainId!==56n){try{await window.ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:'0x38'}]})}catch(e){alert('Canza network zuwa BNB Smart Chain (Chain ID 56).')}}
+  if(net.chainId!==56n){
+   try{await window.ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:'0x38'}]})}
+   catch(e){alert('Please switch your wallet to BNB Smart Chain (Chain ID 56).');return}
+  }
   await refresh();
- }catch(e){alert('Connect bai yi ba: '+(e.shortMessage||e.message))}
+ }catch(e){alert('Connection failed: '+(e.shortMessage||e.message))}
 }
 async function refresh(){
- const b=await provider.getBalance(address),v=Number(ethers.formatEther(b)).toFixed(4);
- document.getElementById('balance').textContent=v+' BNB';document.getElementById('wb').textContent=v+' BNB';document.getElementById('ab').textContent=v+' BNB';document.getElementById('pbal').textContent=v+' BNB';
- document.getElementById('addr').textContent=short(address);document.getElementById('paddr').textContent=address;document.getElementById('receiveAddr').textContent=address;
- document.getElementById('status').textContent='Connected: '+short(address);document.getElementById('notice').textContent='Wallet connected successfully';
+ const b=await provider.getBalance(address);
+ const v=Number(ethers.formatEther(b)).toFixed(4);
+ document.getElementById('balance').textContent=v+' BNB';
+ document.getElementById('bnbBalance').textContent=v+' BNB';
+ document.getElementById('walletAddress').textContent=address;
+ document.getElementById('receiveAddress').textContent=address;
+ document.getElementById('status').textContent='Connected: '+short(address);
+ document.getElementById('networkText').textContent='BNB Smart Chain • Solana integration ready';
 }
-async function sendBNB(){
- if(!signer){alert('Da farko Connect Wallet');return}
- const to=document.getElementById('to').value.trim(),amount=document.getElementById('amount').value;
- if(!ethers.isAddress(to)){alert('Address ba daidai ba ne');return}
- if(!amount||Number(amount)<=0){alert('Shigar da amount');return}
- try{const tx=await signer.sendTransaction({to:to,value:ethers.parseEther(amount)});alert('An aika transaction:\n'+tx.hash);closeBox();await refresh()}catch(e){alert('Transaction bai yi ba: '+(e.shortMessage||e.message))}
+function getQuote(){
+ if(!address){alert('Connect wallet first.');return}
+ const token=document.getElementById('token').value.trim();
+ const amount=document.getElementById('amount').value;
+ if(!token||!amount){alert('Enter token address and amount.');return}
+ document.getElementById('quote').textContent='Awaiting real DEX router configuration';
+}
+function confirmTrade(){
+ if(!address){alert('Connect wallet first.');return}
+ alert('Trade is safely disabled until a real DEX router and quote API are configured. No fake transaction will be sent.');
 }
 function disconnectWallet(){location.reload()}
+
+const examples=[
+ ['🟣','New Solana Meme','SOL','Live API pending'],
+ ['🟡','New BNB Meme','BNB','Live API pending'],
+ ['🔥','Trending Meme','MULTI','Live API pending']
+];
+function render(id){
+ document.getElementById(id).innerHTML=examples.map(x=>`
+ <div class="item"><div class="row"><div class="token"><div class="coin">${x[0]}</div><div><b>${x[1]}</b><div class="muted">${x[2]}</div></div></div><span class="badge">${x[3]}</span></div></div>`).join('');
+}
+render('trending');render('discoverList');
 </script>
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"></script>
-</body></html>
+</body>
+ </html>
