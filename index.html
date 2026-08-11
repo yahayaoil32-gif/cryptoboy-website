@@ -1,10 +1,583 @@
-<link rel="stylesheet" href="style.css">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    content="#07050d"
+  >
+
+  <title>CoinRush</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+    <div class="logo">
+      Coin<span>Rush</span>
+    </div>
+
+    <button
+      id="connectBtn"
+      class="connect"
+      type="button"
+    >
+      Connect
+    </button>
+  </header>
+
+
+  <div
+    id="status"
+    class="status"
+  >
+    Wallet not connected
+  </div>
+
+
+  <nav class="nav">
+
+    <button
+      class="active"
+      data-page="home"
+      type="button"
+    >
+      ⌂<br>Home
+    </button>
+
+    <button
+      data-page="discover"
+      type="button"
+    >
+      🔥<br>Discover
+    </button>
+
+    <button
+      data-page="trade"
+      type="button"
+    >
+      ⇄<br>Trade
+    </button>
+
+    <button
+      data-page="portfolio"
+      type="button"
+    >
+      ◉<br>Portfolio
+    </button>
+
+    <button
+      data-page="rewards"
+      type="button"
+    >
+      🎁<br>Rewards
+    </button>
+
+    <button
+      data-page="history"
+      type="button"
+    >
+      ◷<br>History
+    </button>
+
+  </nav>
+
+
+  <!-- HOME -->
+
+  <section
+    id="home"
+    class="page active"
+  >
+
+    <div class="card">
+
+      <div class="label">
+        Total Balance
+      </div>
+
+      <div
+        id="mainBalance"
+        class="balance"
+      >
+        0 BNB
+      </div>
+
+      <div
+        id="networkText"
+        class="network"
+      >
+        Network not connected
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="action"
+        type="button"
+        onclick="openTrade()"
+      >
+        <span>📈</span>
+        Buy
+      </button>
+
+      <button
+        class="action"
+        type="button"
+        onclick="openTrade()"
+      >
+        <span>📉</span>
+        Sell
+      </button>
+
+      <button
+        class="action"
+        type="button"
+        onclick="openTrade()"
+      >
+        <span>🔄</span>
+        Swap
+      </button>
+
+      <button
+        class="action"
+        type="button"
+        onclick="receiveWallet()"
+      >
+        <span>📥</span>
+        Receive
+      </button>
+
+    </div>
+
+
+    <h2>
+      Trending Meme Coins
+    </h2>
+
+    <div id="homeTokens">
+      <div class="empty">
+        Loading market data...
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- DISCOVER -->
+
+  <section
+    id="discover"
+    class="page"
+  >
+
+    <h2>
+      Discover Meme Coins
+    </h2>
+
+    <div class="card">
+
+      <div class="label">
+        Search token
+      </div>
+
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Search token or address..."
+      >
+
+    </div>
+
+    <div id="discoverTokens">
+      <div class="empty">
+        Loading market data...
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- TRADE -->
+
+  <section
+    id="trade"
+    class="page"
+  >
+
+    <h2>
+      Trade
+    </h2>
+
+    <div class="card">
+
+      <div class="label">
+        Network
+      </div>
+
+      <select id="tradeNetwork">
+
+        <option value="bsc">
+          BNB Smart Chain
+        </option>
+
+        <option value="solana">
+          Solana
+        </option>
+
+      </select>
+
+
+      <div class="label">
+        Action
+      </div>
+
+      <select id="tradeAction">
+
+        <option value="buy">
+          Buy
+        </option>
+
+        <option value="sell">
+          Sell
+        </option>
+
+        <option value="swap">
+          Swap
+        </option>
+
+      </select>
+
+
+      <div class="label">
+        Token Address / Mint
+      </div>
+
+      <input
+        id="tokenAddress"
+        type="text"
+        placeholder="Token contract address"
+      >
+
+
+      <div class="label">
+        Amount
+      </div>
+
+      <input
+        id="tradeAmount"
+        type="number"
+        step="any"
+        placeholder="Amount"
+      >
+
+
+      <button
+        id="quoteBtn"
+        class="primary"
+        type="button"
+      >
+        Get Quote
+      </button>
+
+
+      <pre id="quoteResult">No quote requested.</pre>
+
+
+      <button
+        id="executeBtn"
+        class="secondary"
+        type="button"
+      >
+        Connect wallet first
+      </button>
+
+
+      <p class="small">
+        CoinRush is non-custodial.
+        Transactions require wallet approval.
+        Never enter a seed phrase or private key.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- PORTFOLIO -->
+
+  <section
+    id="portfolio"
+    class="page"
+  >
+
+    <h2>
+      Portfolio
+    </h2>
+
+
+    <div class="card">
+
+      <div class="label">
+        Wallet Address
+      </div>
+
+      <div
+        id="portfolioAddress"
+        class="address"
+      >
+        Not connected
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="label">
+        Native Balance
+      </div>
+
+      <div
+        id="portfolioBalance"
+        class="balance"
+      >
+        0
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="label">
+        Network
+      </div>
+
+      <div id="portfolioNetwork">
+        Not connected
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- REWARDS -->
+
+  <section
+    id="rewards"
+    class="page"
+  >
+
+    <h2>
+      My Rewards
+    </h2>
+
+
+    <div class="card">
+
+      <div class="stat">
+
+        <span>
+          Trading Fee Rewards
+        </span>
+
+        <b id="tradeRewards">
+          $0.00
+        </b>
+
+      </div>
+
+
+      <div class="stat">
+
+        <span>
+          Referral Rewards
+        </span>
+
+        <b id="refRewards">
+          $0.00
+        </b>
+
+      </div>
+
+
+      <div class="stat">
+
+        <span>
+          Total Earned
+        </span>
+
+        <b id="totalRewards">
+          $0.00
+        </b>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="label">
+        Your Referral Code
+      </div>
+
+      <h3 id="refCode">
+        Connect wallet
+      </h3>
+
+      <button
+        class="primary"
+        type="button"
+        onclick="copyReferral()"
+      >
+        Copy Referral Link
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>
+        Rewards
+      </h3>
+
+      <p class="muted">
+        Rewards will be credited only after
+        verified transactions and the
+        platform's reward rules are confirmed
+        by the backend.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- HISTORY -->
+
+  <section
+    id="history"
+    class="page"
+  >
+
+    <h2>
+      Transaction History
+    </h2>
+
+    <div class="card">
+
+      <div
+        id="historyContent"
+        class="empty"
+      >
+        Connect your wallet to view activity.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <footer>
+    CoinRush Web3 Trading Wallet
+  </footer>
+
+</div>
+
+
+<!-- WALLET MODAL -->
+
+<div
+  id="walletModal"
+  class="modal"
+>
+
+  <div class="sheet">
+
+    <button
+      id="closeModal"
+      class="close"
+      type="button"
+    >
+      ×
+    </button>
+
+    <h2>
+      Choose Wallet
+    </h2>
+
+
+    <button
+      id="evmWallet"
+      class="wallet-option"
+      type="button"
+    >
+      🦊 MetaMask / Trust Wallet / OKX
+    </button>
+
+
+    <button
+      id="phantomWallet"
+      class="wallet-option"
+      type="button"
+    >
+      👻 Phantom
+    </button>
+
+
+    <p class="small">
+      CoinRush never asks for your seed phrase
+      or private key.
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     EXTERNAL LIBRARIES
+     ===================================================== -->
+
+<script
+  src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"
+></script>
+
+
+<!-- =====================================================
+     COINRUSH FILES
+     ===================================================== -->
 
 <script src="config.js"></script>
-<script src="wallet/wallet.js"></script>
-<script src="chains/bsc.js"></script>
+
+<script src="api.js"></script>
+
+<script src="chains/bnb.js"></script>
+
 <script src="chains/solana.js"></script>
-<script src="dex/pancakeswap.js"></script>
-<script src="dex/jupiter.js"></script>
-<script src="api/api.js"></script>
+
+<script src="dex/dex.js"></script>
+
+<script src="wallet/wallet/wallet.js"></script>
+
 <script src="app.js"></script>
+
+
+</body>
+  </html>
